@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <title>Mr Reader</title>
+</head>
+<body>
+    <header class="text-gray-600 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+            <svg xmlns="E:\Django\Mr Reader\Books\Minimalist Initial Letter Logo.png" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+            <span class="ml-3 text-xl">Mr Search</span>
+          </a>
+        </div>
+    </header>
+
+    {% comment %} Search Bar {% endcomment %}
+    <section class="text-gray-600  body-font relative">
+        <form action="search" method="post">
+          {% csrf_token %}  
+          <div class="container px-5 py-24 mx-auto">
+            <div class="flex flex-col text-center w-full mb-12">
+              <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-black">Mr Reader</h1>
+              <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Online Library</p>
+            </div>
+            <div class="lg:w-1/2 md:w-2/3 mx-auto">
+              <div class="flex flex-wrap -m-2">
+                <div class="p-2 w-full">
+                  <div class="relative">
+                    <label for="name" class="leading-7 text-sm text-gray-600">Book Name</label>
+                    <input type="text" id="name" name="x" placeholder="" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                  </div>
+                </div>
+                <div class="p-2 w-full">
+                  <button type='submit'class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Search</button>
+                </div>
+              </div>
+          </div>
+        </form>
+    </section>
+
+
+{% comment %} Search  {% endcomment %}
+<div id="default-carousel" class="relative" data-carousel="static">
+    <!-- Carousel wrapper -->
+    <div class="relative  overflow-hidden rounded-lg">
+        {% for i in results %}
+        <a href="{{i.preview}}">
+            <div class="flex justify-center">
+                <div class="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg">
+                  <img class=" w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg" src="{{i.thumbnail}}" alt="" />
+                  <div class="p-6 flex flex-col justify-start">
+                    <h5 class="text-gray-900 text-xl font-medium mb-2">{{i.title}}</h5>
+                    <p class="text-gray-700 text-base mb-4">
+                      {{i.description}}
+                    </p>
+                    <p class="text-gray-600 text-xs">Pages :{{i.count}}</p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                &nbsp;
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
